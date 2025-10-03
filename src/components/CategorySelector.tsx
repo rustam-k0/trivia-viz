@@ -1,4 +1,3 @@
-
 interface CategorySelectorProps {
   categories: string[];
   currentFilter: string;
@@ -13,12 +12,12 @@ export default function CategorySelector({
   questionCount 
 }: CategorySelectorProps) {
   return (
-    <div className="bg-white p-10 rounded-xl shadow-md border border-gray-200">
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 flex-1">
+    <div className="card p-8">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+        <div className="flex-1">
           <label 
             htmlFor="category-select" 
-            className="text-lg font-bold text-gray-900 whitespace-nowrap"
+            className="block text-lg font-semibold text-gray-900 mb-3"
           >
             Filter by Category
           </label>
@@ -26,18 +25,23 @@ export default function CategorySelector({
             id="category-select"
             value={currentFilter}
             onChange={(e) => setFilter(e.target.value)}
-            className="w-full sm:w-96 bg-white border-2 border-gray-300 text-gray-900 text-base rounded-lg px-5 py-3.5 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all"
+            className="w-full lg:w-80 bg-white border border-gray-300 text-gray-900 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           >
-            {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+            {categories.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
           </select>
         </div>
-        <div className="text-center lg:border-l-2 lg:border-gray-200 lg:pl-10">
-          <p className="text-6xl font-bold text-blue-600 mb-2">
-            {questionCount}
-          </p>
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
-            Total Questions
-          </p>
+        
+        <div className="text-center lg:text-right">
+          <div className="bg-blue-50 rounded-lg p-4 min-w-[120px]">
+            <p className="text-2xl font-bold text-blue-600">
+              {questionCount}
+            </p>
+            <p className="text-xs font-medium text-gray-600 uppercase tracking-wider mt-1">
+              Questions
+            </p>
+          </div>
         </div>
       </div>
     </div>

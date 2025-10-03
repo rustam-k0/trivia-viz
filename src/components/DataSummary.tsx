@@ -11,32 +11,30 @@ const DataSummary: React.FC<DataSummaryProps> = ({
   totalQuestions, 
   difficultyLevels 
 }) => (
-  <div className="mt-12 bg-gray-100 p-8 rounded-lg border border-gray-300">
-    <h3 className="text-lg font-bold text-gray-900 mb-4" style={{ letterSpacing: '0.5px' }}>
-      Data Summary
-    </h3>
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-      <div className="text-center">
-        <p className="text-3xl font-bold text-blue-600" style={{ letterSpacing: '0.5px' }}>
+  <div className="card p-8">
+    <h3 className="text-xl font-semibold text-gray-900 mb-6">Dataset Overview</h3>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="text-center p-6 bg-blue-50 rounded-lg">
+        <p className="text-3xl font-bold text-blue-600 mb-2">
           {totalCategories}
         </p>
-        <p className="text-sm font-medium text-gray-600 mt-2 uppercase tracking-wider">
+        <p className="text-sm font-medium text-gray-700 uppercase tracking-wider">
           Categories
         </p>
       </div>
-      <div className="text-center">
-        <p className="text-3xl font-bold text-blue-600" style={{ letterSpacing: '0.5px' }}>
+      <div className="text-center p-6 bg-green-50 rounded-lg">
+        <p className="text-3xl font-bold text-green-600 mb-2">
           {totalQuestions}
         </p>
-        <p className="text-sm font-medium text-gray-600 mt-2 uppercase tracking-wider">
+        <p className="text-sm font-medium text-gray-700 uppercase tracking-wider">
           Total Questions
         </p>
       </div>
-      <div className="text-center">
-        <p className="text-3xl font-bold text-blue-600" style={{ letterSpacing: '0.5px' }}>
+      <div className="text-center p-6 bg-purple-50 rounded-lg">
+        <p className="text-3xl font-bold text-purple-600 mb-2">
           {difficultyLevels}
         </p>
-        <p className="text-sm font-medium text-gray-600 mt-2 uppercase tracking-wider">
+        <p className="text-sm font-medium text-gray-700 uppercase tracking-wider">
           Difficulty Levels
         </p>
       </div>

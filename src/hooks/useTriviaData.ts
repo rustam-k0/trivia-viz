@@ -16,11 +16,19 @@ export const useTriviaData = () => {
       try {
         setIsLoading(true);
         setError(null);
+        console.log('Fetching trivia questions...');
         const data = await fetchQuestions(controller.signal);
+        
+        if (data.length === 0) {
+          throw new Error('No questions received from API');
+        }
+        
+        console.log(`Successfully loaded ${data.length} questions`);
         setQuestions(data);
       } catch (err) {
+        console.error('Error loading trivia data:', err);
         if (err instanceof Error && err.name !== 'AbortError') {
-          setError(err.message);
+          setError(err.message || 'Failed to load trivia data. Please try again later.');
         }
       } finally {
         setIsLoading(false);

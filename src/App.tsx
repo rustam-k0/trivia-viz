@@ -25,52 +25,72 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b-2 border-gray-200">
-        <div className="max-w-7xl mx-auto px-8 py-12">
-          <h1 className="text-5xl font-bold text-gray-900 tracking-tight mb-3">
-            Trivia Knowledge Dashboard
-          </h1>
-          <p className="text-lg text-gray-600">
-            Data-driven insights from Open Trivia Database
-          </p>
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="container-modern py-12">
+          <div className="fade-in">
+            <h1 className="text-display text-gray-900 mb-4">
+              Trivia Insights
+            </h1>
+            <p className="text-xl text-gray-600 font-medium max-w-2xl">
+              Interactive data visualization of trivia questions from Open Trivia Database
+            </p>
+          </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-8 py-16">
-        <CategorySelector
-          categories={uniqueCategories}
-          currentFilter={filter}
-          setFilter={setFilter}
-          questionCount={questionCount}
-        />
+      {/* Main Content */}
+      <main className="container-modern py-12">
+        {/* Filter Section */}
+        <div className="fade-in mb-12">
+          <CategorySelector
+            categories={uniqueCategories}
+            currentFilter={filter}
+            setFilter={setFilter}
+            questionCount={questionCount}
+          />
+        </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-5 gap-8 mt-16">
-          <div className="xl:col-span-3 bg-white p-10 rounded-xl shadow-md border border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 tracking-tight">
-              Distribution by Category
-            </h2>
+        {/* Charts Grid */}
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-12">
+          {/* Category Chart */}
+          <div className="xl:col-span-2 card p-8 fade-in">
+            <div className="mb-6">
+              <h2 className="text-title text-gray-900 mb-2">
+                Category Distribution
+              </h2>
+              <p className="text-gray-600">Breakdown of questions by topic area</p>
+            </div>
             <CategoryPieChart data={categoryData} />
           </div>
-          
-          <div className="xl:col-span-2 bg-white p-10 rounded-xl shadow-md border border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 tracking-tight">
-              Distribution by Difficulty
-            </h2>
+
+          {/* Difficulty Chart */}
+          <div className="card p-8 fade-in">
+            <div className="mb-6">
+              <h2 className="text-title text-gray-900 mb-2">
+                Difficulty Levels
+              </h2>
+              <p className="text-gray-600">Spread of question complexity</p>
+            </div>
             <DifficultyBarChart data={difficultyData} />
           </div>
         </div>
 
-        <DataSummary
-          totalCategories={uniqueCategories.length - 1}
-          totalQuestions={totalQuestions}
-          difficultyLevels={difficultyData.length}
-        />
+        {/* Data Summary */}
+        <div className="fade-in">
+          <DataSummary
+            totalCategories={uniqueCategories.length - 1}
+            totalQuestions={totalQuestions}
+            difficultyLevels={difficultyData.length}
+          />
+        </div>
       </main>
 
-      <footer className="bg-white border-t-2 border-gray-200 mt-24">
-        <div className="max-w-7xl mx-auto px-8 py-8">
-          <p className="text-sm text-gray-500 text-center">
-            Data sourced from Open Trivia Database API â€¢ Designed in WEF style
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200 mt-16">
+        <div className="container-modern py-8">
+          <p className="text-center text-gray-600">
+            Data sourced from <strong>Open Trivia Database</strong> • Built with modern web technologies
           </p>
         </div>
       </footer>
