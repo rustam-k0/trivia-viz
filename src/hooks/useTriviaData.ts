@@ -13,22 +13,18 @@ export const useTriviaData = () => {
     const controller = new AbortController();
 
     const loadData = async () => {
+      setIsLoading(true);
+      setError(null);
+      
       try {
-        setIsLoading(true);
-        setError(null);
-        console.log('Fetching trivia questions...');
         const data = await fetchQuestions(controller.signal);
-        
         if (data.length === 0) {
-          throw new Error('No questions received from API');
+          throw new Error('No questions loaded');
         }
-        
-        console.log(`Successfully loaded ${data.length} questions`);
         setQuestions(data);
       } catch (err) {
-        console.error('Error loading trivia data:', err);
         if (err instanceof Error && err.name !== 'AbortError') {
-          setError(err.message || 'Failed to load trivia data. Please try again later.');
+          setError(err.message || 'Failed to load trivia data');
         }
       } finally {
         setIsLoading(false);
@@ -36,10 +32,7 @@ export const useTriviaData = () => {
     };
 
     loadData();
-
-    return () => {
-      controller.abort();
-    };
+    return () => controller.abort();
   }, []);
 
   const filteredQuestions = useMemo(() =>
@@ -49,17 +42,16 @@ export const useTriviaData = () => {
 
   const categoryData = useMemo(() => aggregateByCategory(filteredQuestions), [filteredQuestions]);
   const difficultyData = useMemo(() => aggregateByDifficulty(filteredQuestions), [filteredQuestions]);
-  const uniqueCategories = useMemo(() => getUniqueCategories(questions), [questions]);
+  const uniqueCategories = useMemo(() => ['All', ...getUniqueCategories(questions)], [questions]);
 
   return {
-    isLoading,
-    error,
-    filter,
-    setFilter,
-    categoryData,
-    difficultyData,
-    uniqueCategories,
-    questionCount: filteredQuestions.length,
-    totalQuestions: questions.length,
-  };
+  isLoading,
+  error,
+  filter,
+  setFilter,
+  categoryData,
+  difficultyData,
+  uniqueCategories,
+  questionCount: filteredQuestions.length,
+};
 };
