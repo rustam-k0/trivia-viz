@@ -24,76 +24,87 @@ const App: React.FC = () => {
   if (error) return <ErrorState message={error} />;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="container-modern py-12">
-          <div className="fade-in">
-            <h1 className="text-display text-gray-900 mb-4">
-              Trivia Insights
-            </h1>
-            <p className="text-xl text-gray-600 font-medium max-w-2xl">
-              Interactive data visualization of trivia questions from Open Trivia Database
+    <div className="min-h-screen bg-cyber-primary relative">
+      {/* Animated Background Elements */}
+      <div className="cyber-bg"></div>
+      <div className="cyber-grid"></div>
+      
+      {/* Main Content */}
+      <div className="relative z-10">
+        {/* Header */}
+        <header className="border-b border-cyber py-6 lg:py-8">
+          <div className="cyber-container">
+            <div className="cyber-fade-in">
+              <h1 className="text-display text-cyber-primary mb-2 lg:mb-4 cyber-glitch" data-text="TRIVIA.AI">
+                TRIVIA<span className="text-accent">.</span>AI
+              </h1>
+              <p className="text-body text-cyber-secondary max-w-2xl">
+                Advanced data visualization engine
+              </p>
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="cyber-container py-6 lg:py-8">
+          {/* Control Interface */}
+          <div className="cyber-fade-in mb-6 lg:mb-8" style={{animationDelay: '0.1s'}}>
+            <CategorySelector
+              categories={uniqueCategories}
+              currentFilter={filter}
+              setFilter={setFilter}
+              questionCount={questionCount}
+            />
+          </div>
+
+          {/* Visualization Grid */}
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
+            {/* Primary Data Visualization */}
+            <div className="xl:col-span-2 cyber-card p-4 lg:p-6 cyber-fade-in" style={{animationDelay: '0.2s'}}>
+              <div className="mb-4 lg:mb-6">
+                <h2 className="text-title text-cyber-primary mb-1 lg:mb-2">
+                  DOMAIN ANALYSIS
+                </h2>
+                <p className="text-caption text-cyber-secondary">
+                  Knowledge distribution patterns
+                </p>
+              </div>
+              <CategoryPieChart data={categoryData} />
+            </div>
+
+            {/* Secondary Metrics */}
+            <div className="cyber-card p-4 lg:p-6 cyber-fade-in" style={{animationDelay: '0.3s'}}>
+              <div className="mb-4 lg:mb-6">
+                <h2 className="text-title text-cyber-primary mb-1 lg:mb-2">
+                  COMPLEXITY MATRIX
+                </h2>
+                <p className="text-caption text-cyber-secondary">
+                  Difficulty spectrum
+                </p>
+              </div>
+              <DifficultyBarChart data={difficultyData} />
+            </div>
+          </div>
+
+          {/* System Metrics */}
+          <div className="cyber-fade-in" style={{animationDelay: '0.4s'}}>
+            <DataSummary
+              totalCategories={uniqueCategories.length - 1}
+              totalQuestions={totalQuestions}
+              difficultyLevels={difficultyData.length}
+            />
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="border-t border-cyber mt-8 lg:mt-12 py-4 lg:py-6">
+          <div className="cyber-container">
+            <p className="text-caption text-cyber-secondary text-center">
+              SYSTEM ACTIVE • SOURCE: OPEN TRIVIA DB • v2.1.0
             </p>
           </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="container-modern py-12">
-        {/* Filter Section */}
-        <div className="fade-in mb-12">
-          <CategorySelector
-            categories={uniqueCategories}
-            currentFilter={filter}
-            setFilter={setFilter}
-            questionCount={questionCount}
-          />
-        </div>
-
-        {/* Charts Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-12">
-          {/* Category Chart */}
-          <div className="xl:col-span-2 card p-8 fade-in">
-            <div className="mb-6">
-              <h2 className="text-title text-gray-900 mb-2">
-                Category Distribution
-              </h2>
-              <p className="text-gray-600">Breakdown of questions by topic area</p>
-            </div>
-            <CategoryPieChart data={categoryData} />
-          </div>
-
-          {/* Difficulty Chart */}
-          <div className="card p-8 fade-in">
-            <div className="mb-6">
-              <h2 className="text-title text-gray-900 mb-2">
-                Difficulty Levels
-              </h2>
-              <p className="text-gray-600">Spread of question complexity</p>
-            </div>
-            <DifficultyBarChart data={difficultyData} />
-          </div>
-        </div>
-
-        {/* Data Summary */}
-        <div className="fade-in">
-          <DataSummary
-            totalCategories={uniqueCategories.length - 1}
-            totalQuestions={totalQuestions}
-            difficultyLevels={difficultyData.length}
-          />
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-16">
-        <div className="container-modern py-8">
-          <p className="text-center text-gray-600">
-            Data sourced from <strong>Open Trivia Database</strong> • Built with modern web technologies
-          </p>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   );
 };

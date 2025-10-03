@@ -5,26 +5,27 @@ interface CategoryPieChartProps {
   data: AggregationData[];
 }
 
-const COLORS = ['#2563eb', '#059669', '#dc2626', '#7c3aed', '#ea580c', '#0891b2', '#65a30d', '#475569'];
+const CYBER_COLORS = ['#4CFF8C', '#FF6B6B', '#6B66FF', '#FFD166', '#06D6A0', '#118AB2', '#EF476F', '#073B4C'];
 
 export default function CategoryPieChart({ data }: CategoryPieChartProps) {
   const chartData = data.filter(d => d.count > 0);
 
   if (chartData.length === 0) {
     return (
-      <div className="flex items-center justify-center h-80 text-gray-500">
+      <div className="flex items-center justify-center h-80">
         <div className="text-center">
-          <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-          <p className="text-gray-600">No data available for current filter</p>
+          <div className="w-16 h-16 border-2 border-cyber rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-accent text-2xl">∅</span>
+          </div>
+          <div className="text-caption text-cyber-secondary mb-2">NO DATA STREAMS DETECTED</div>
+          <div className="text-body text-cyber-secondary">Filter parameters yield zero results</div>
         </div>
       </div>
     );
   }
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="100%" height={350}>
       <PieChart>
         <Pie
           data={chartData}
@@ -32,8 +33,8 @@ export default function CategoryPieChart({ data }: CategoryPieChartProps) {
           nameKey="name"
           cx="50%"
           cy="50%"
-          outerRadius={140}
-          innerRadius={70}
+          outerRadius={120}
+          innerRadius={60}
           paddingAngle={2}
           label={({ name, percent }) => 
             percent > 0.03 ? `${(percent * 100).toFixed(0)}%` : ''
@@ -43,19 +44,21 @@ export default function CategoryPieChart({ data }: CategoryPieChartProps) {
           {chartData.map((_entry, index) => (
             <Cell 
               key={`cell-${index}`} 
-              fill={COLORS[index % COLORS.length]}
-              stroke="#ffffff"
+              fill={CYBER_COLORS[index % CYBER_COLORS.length]}
+              stroke="var(--bg-primary)"
               strokeWidth={2}
             />
           ))}
         </Pie>
         <Tooltip 
-          formatter={(value) => [`${value} questions`, 'Count']}
+          formatter={(value) => [`${value}`, 'COUNT']}
+          labelFormatter={(label) => label.toUpperCase()}
           contentStyle={{
-            backgroundColor: '#ffffff',
-            border: '1px solid #e5e7eb',
+            backgroundColor: 'var(--bg-secondary)',
+            border: '1px solid var(--border-primary)',
             borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+            color: 'var(--text-primary)',
+            fontSize: '12px',
           }}
         />
         <Legend 
@@ -64,9 +67,9 @@ export default function CategoryPieChart({ data }: CategoryPieChartProps) {
           align="right"
           wrapperStyle={{
             paddingLeft: '20px',
-            fontSize: '14px',
+            fontSize: '11px',
+            color: 'var(--text-primary)',
           }}
-          formatter={(value) => <span className="text-gray-700">{value}</span>}
         />
       </PieChart>
     </ResponsiveContainer>
