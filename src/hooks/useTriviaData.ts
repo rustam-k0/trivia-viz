@@ -18,9 +18,6 @@ export const useTriviaData = () => {
       
       try {
         const data = await fetchQuestions(controller.signal);
-        if (data.length === 0) {
-          throw new Error('No questions loaded');
-        }
         setQuestions(data);
       } catch (err) {
         if (err instanceof Error && err.name !== 'AbortError') {
@@ -39,19 +36,24 @@ export const useTriviaData = () => {
     filter === 'All' ? questions : questions.filter(q => q.category === filter),
     [questions, filter]
   );
+  
+  // Добавлена сортировка категорий
+  const categoryData = useMemo(() => {
+    const aggregated = aggregateByCategory(filteredQuestions);
+    return aggregated.sort((a, b) => b.count - a.count);
+  }, [filteredQuestions]);
 
-  const categoryData = useMemo(() => aggregateByCategory(filteredQuestions), [filteredQuestions]);
   const difficultyData = useMemo(() => aggregateByDifficulty(filteredQuestions), [filteredQuestions]);
   const uniqueCategories = useMemo(() => ['All', ...getUniqueCategories(questions)], [questions]);
 
   return {
-  isLoading,
-  error,
-  filter,
-  setFilter,
-  categoryData,
-  difficultyData,
-  uniqueCategories,
-  questionCount: filteredQuestions.length,
-};
+    isLoading,
+    error,
+    filter,
+    setFilter,
+    categoryData,
+    difficultyData,
+    uniqueCategories,
+    questionCount: filteredQuestions.length,
+  };
 };

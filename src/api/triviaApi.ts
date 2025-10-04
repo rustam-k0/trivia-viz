@@ -5,10 +5,19 @@ const MAX_QUESTIONS = 50;
 
 let sessionToken: string | null = null;
 
-const decodeHtml = (str: string): string => {
-  const textarea = document.createElement('textarea');
-  textarea.innerHTML = str;
-  return textarea.value;
+// Улучшенная функция декодирования
+const decodeText = (str: string): string => {
+  try {
+    // Сначала декодируем URL-сущности (например, %20, %26)
+    const decodedUrl = decodeURIComponent(str);
+    // Затем обрабатываем HTML-сущности (например, &quot;)
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = decodedUrl;
+    return textarea.value;
+  } catch (e) {
+    console.error("Failed to decode text:", str, e);
+    return str; // Возвращаем исходную строку в случае ошибки
+  }
 };
 
 const processApiResponse = (data: any): TriviaQuestion[] => {
@@ -18,10 +27,10 @@ const processApiResponse = (data: any): TriviaQuestion[] => {
 
   return data.results.map((q: any) => ({
     ...q,
-    question: decodeHtml(q.question),
-    category: decodeHtml(q.category),
-    correct_answer: decodeHtml(q.correct_answer),
-    incorrect_answers: q.incorrect_answers.map((ans: string) => decodeHtml(ans)),
+    question: decodeText(q.question),
+    category: decodeText(q.category),
+    correct_answer: decodeText(q.correct_answer),
+    incorrect_answers: q.incorrect_answers.map((ans: string) => decodeText(ans)),
   }));
 };
 
@@ -46,7 +55,13 @@ export const fetchQuestions = async (signal: AbortSignal): Promise<TriviaQuestio
 
   if (data.response_code === 3 || data.response_code === 4) {
     token = await getNewToken();
-    return fetchQuestions(signal);
+    // Делаем повторный вызов с новым токеном
+    const retryResponse = await fetch(`${BASE_URL}api.php?amount=${MAX_QUESTIONS}&token=${token}&encode=url3986`, { signal });
+    const retryData = await retryResponse.json();
+    if (retryData.response_code !== 0) {
+      throw new Error(`API error on retry: ${retryData.response_code}`);
+    }
+    return processApiResponse(retryData);
   }
 
   if (data.response_code !== 0) {
