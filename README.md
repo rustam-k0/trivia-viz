@@ -13,23 +13,25 @@ Trivia Data Visualizer
 
 ```
 /src
-├── /api
-│   └── triviaApi.ts              # API логика с in-memory токеном
 ├── /components
-│   ├── Loading.tsx               # Компонент загрузки
-│   ├── ErrorState.tsx            # Компонент ошибки
-│   ├── CategorySelector.tsx      # Селектор категорий
-│   ├── CategoryPieChart.tsx      # Круговая диаграмма
-│   ├── DifficultyBarChart.tsx    # Столбчатая диаграмма
-│   └──
+│   ├── Charts/
+│   │   ├── CategoryPieChart.tsx
+│   │   └── DifficultyBarChart.tsx
+│   ├── UI/
+│   │   ├── Loading.tsx
+│   │   ├── ErrorState.tsx
+│   │   └── ThemeProvider.tsx
+│   └── Layout/
+│       └── Header.tsx
 ├── /hooks
-│   └── useTriviaData.ts          # Кастомный хук
+│   └── useTriviaData.ts
 ├── /utils
-│   └── dataAggregator.ts         # Утилиты агрегации
-├── types.ts                      # TypeScript типы
-├── App.tsx                       # Главный компонент
-├── main.tsx                      # Точка входа
-└── index.css                     # Глобальные стили
+│   └── dataAggregator.ts
+├── /types
+│   └── index.ts
+├── App.tsx
+├── main.tsx
+└── index.css
 ```
 
 ## Установка и запуск

@@ -23,6 +23,7 @@ const App: React.FC = () => {
   if (isLoading) return <Loading />;
   if (error) return <ErrorState message={error} />;
 
+
   return (
     <>
       <div className="cyber-bg" />
