@@ -13,25 +13,49 @@ Trivia Data Visualizer
 
 ```
 /src
-├── /components
-│   ├── Charts/
-│   │   ├── CategoryPieChart.tsx
-│   │   └── DifficultyBarChart.tsx
-│   ├── UI/
-│   │   ├── Loading.tsx
-│   │   ├── ErrorState.tsx
-│   │   └── ThemeProvider.tsx
-│   └── Layout/
-│       └── Header.tsx
-├── /hooks
-│   └── useTriviaData.ts
-├── /utils
-│   └── dataAggregator.ts
-├── /types
-│   └── index.ts
-├── App.tsx
-├── main.tsx
-└── index.css
+├── public/
+│   └── index.html
+├── src/
+│   ├── api/
+│   │   └── triviaApi.ts
+│   ├── assets/
+│   │   └──
+│   ├── components/
+│   │   ├── Analysis/
+│   │   │   ├── CategoryAnalysis.tsx
+│   │   │   └── DifficultyAnalysis.tsx
+│   │   ├── Charts/
+│   │   │   ├── CategoryPieChart.tsx
+│   │   │   └── DifficultyBarChart.tsx
+│   │   ├── Layout/
+│   │   │   └── Header.tsx
+│   │   └── UI/
+│   │       ├── CategoryLegend.tsx
+│   │       ├── ErrorState.tsx
+│   │       └── Loading.tsx
+|   |
+│   ├── config/
+│   │   └── analysisConfig.ts
+|   |   └── constants.ts
+|   |
+│   ├── context/
+│   │   └── TriviaContext.tsx
+│   ├── hooks/
+│   │   └── useTriviaData.ts
+|   |
+│   ├── types/
+│   │   └── index.ts
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+├── .gitignore
+├── index.html
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
 ```
 
 ## Установка и запуск
