@@ -60,7 +60,6 @@ body {
   background: #6B7280;
 }
 
-button:focus,
-div[role="button"]:focus {
+*:focus {
   outline: none;
 }

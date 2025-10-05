@@ -10,7 +10,7 @@ interface AnalysisCardProps {
 const AnalysisCard: React.FC<AnalysisCardProps> = ({ title, children }) => {
   return (
     <div className="flex flex-col h-full bg-[#1A1A1A] rounded-lg shadow-xl">
-      <h2 className="text-xl font-semibold text-cyber-primary border-b border-border-primary p-4 text-glow-subtle">
+      <h2 className="text-lg font-semibold text-cyber-primary p-3 text-glow-subtle">
         {title}
       </h2>
       <div className="flex-grow flex flex-col">

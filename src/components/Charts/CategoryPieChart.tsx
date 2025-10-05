@@ -10,14 +10,14 @@ const renderActiveShape = (props: any) => {
 
   return (
     <g>
-      <text x={cx} y={cy - 20} textAnchor="middle" fill="#FFFFFF" fontSize="4rem" fontWeight="bold" className="text-shadow-glow">{value}</text>
-      <text x={cx} y={cy + 40} textAnchor="middle" fill="#AAAAAA" fontSize="1.4rem">Questions</text>
-      <text x={cx} y={cy + 75} textAnchor="middle" fill={shapeColor} fontSize="1.3rem" fontWeight="semibold">{payload.name}</text>
+      <text x={cx} y={cy - 15} textAnchor="middle" fill="#FFFFFF" fontSize="3.5rem" fontWeight="bold" className="text-shadow-glow">{value}</text>
+      <text x={cx} y={cy + 30} textAnchor="middle" fill="#AAAAAA" fontSize="1.2rem">Questions</text>
+      <text x={cx} y={cy + 60} textAnchor="middle" fill={shapeColor} fontSize="1.1rem" fontWeight="semibold">{payload.name}</text>
       <Sector
         cx={cx} cy={cy}
-        innerRadius={innerRadius} outerRadius={outerRadius + 15}
+        innerRadius={innerRadius} outerRadius={outerRadius + 10}
         startAngle={startAngle} endAngle={endAngle}
-        fill={fill} style={{ filter: `drop-shadow(0 0 10px ${shapeColor})` }}
+        fill={fill} style={{ filter: `drop-shadow(0 0 8px ${shapeColor})` }}
       />
     </g>
   );
@@ -49,7 +49,7 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
 
   if (!data.length) {
     return (
-      <div className="flex items-center justify-center h-full w-full min-h-[450px]">
+      <div className="flex items-center justify-center h-full w-full min-h-[500px]">
         <div className="text-center">
           <p className="text-text-secondary text-lg">No Data Available</p>
         </div>
@@ -57,16 +57,12 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
     );
   }
 
-  const SIZE = 550;
-  const outerRadius = 220;
-  const innerRadius = 130;
-
   return (
-    <div className="w-full h-full relative" style={{ minWidth: SIZE, minHeight: SIZE }}>
+    <div className="w-full h-full min-h-[500px]">
       <div className={`absolute inset-0 flex flex-col items-center justify-center pointer-events-none transition-opacity duration-200 ${activeIndex !== null ? 'opacity-0' : 'opacity-100'}`}>
-        <div className="text-shadow-glow text-6xl font-bold" style={{ color: centerTextColor }}>{questionCount}</div>
-        <div className="text-[#AAAAAA] text-base mt-2">{centerLabel}</div>
-        {isFiltered && (<div className="font-semibold text-lg mt-4" style={{ color: centerTextColor }}>{filter}</div>)}
+        <div className="text-shadow-glow text-5xl font-bold" style={{ color: centerTextColor }}>{questionCount}</div>
+        <div className="text-[#AAAAAA] text-sm mt-1">{centerLabel}</div>
+        {isFiltered && (<div className="font-semibold text-base mt-2" style={{ color: centerTextColor }}>{filter}</div>)}
       </div>
 
       <ResponsiveContainer width="100%" height="100%">
@@ -78,8 +74,8 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
             dataKey="count"
             nameKey="name"
             cx="50%" cy="50%"
-            outerRadius={outerRadius} innerRadius={innerRadius}
-            paddingAngle={4}
+            outerRadius={200} innerRadius={120}
+            paddingAngle={2}
             onMouseEnter={onPieEnter} onMouseLeave={onMouseLeave}
             onClick={(_, index) => onCategoryClick(data[index].name)}
           >
@@ -87,8 +83,8 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
               <Cell 
                 key={`cell-${entry.name}`} 
                 fill={entry.color}
-                stroke="#0D0D0D" strokeWidth={3}
-                className="cursor-pointer focus:outline-none transition-opacity duration-200 hover:opacity-80"
+                stroke="#0D0D0D" strokeWidth={2}
+                className="cursor-pointer transition-opacity duration-200 hover:opacity-80"
               />
             ))}
           </Pie>

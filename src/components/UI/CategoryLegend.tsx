@@ -1,6 +1,6 @@
 // src/components/UI/CategoryLegend.tsx
 
-import React, { useState } from 'react';
+import React from 'react';
 
 interface EnrichedCategoryData {
   name: string;
@@ -18,52 +18,37 @@ interface CategoryLegendProps {
 
 const CategoryLegend: React.FC<CategoryLegendProps> = (props) => {
   const { data, filter, onMouseEnter, onMouseLeave, onCategoryClick } = props;
-  const [ignoreHover, setIgnoreHover] = useState(false);
   
   const sortedData = [...data].sort((a, b) => b.count - a.count);
 
-  const handleClick = (name: string) => {
-    const wasFiltered = filter === name;
-    onCategoryClick(name);
-    if (wasFiltered) {
-      setIgnoreHover(true);
-      setTimeout(() => setIgnoreHover(false), 300);
-    }
-  };
-
-  const handleMouseEnter = (index: number) => {
-    if (!ignoreHover) onMouseEnter(null, index);
-  };
-
   return (
     <div className="w-full flex-grow">
-      <div className="flex flex-col gap-y-2.5">
-        {sortedData.map((item) => {
-          const originalIndex = data.findIndex(d => d.name === item.name);
+      <div className="flex flex-col gap-y-2">
+        {sortedData.map((item, i) => {
           const isActive = filter === item.name;
 
           return (
             <div
               key={item.name}
-              className={`flex items-center w-full rounded-md transition-all duration-150 cursor-pointer focus:outline-none
+              className={`flex items-center w-full rounded transition-all duration-150 cursor-pointer
                 ${isActive 
-                  ? 'bg-[#374151] ring-2 ring-[#14B8A6]' 
+                  ? 'bg-[#374151] ring-1 ring-[#14B8A6]' 
                   : 'hover:bg-[#374151]'
                 }`
               }
-              onMouseEnter={() => handleMouseEnter(originalIndex)}
+              onMouseEnter={() => onMouseEnter(null, i)}
               onMouseLeave={onMouseLeave}
-              onClick={() => handleClick(item.name)}
+              onClick={() => onCategoryClick(item.name)}
             >
               <div className="flex justify-between items-center w-full py-1.5 px-2">
-                <div className="flex items-center gap-x-4 flex-grow min-w-0">
+                <div className="flex items-center gap-x-3 flex-grow min-w-0">
                   <div 
                     style={{ color: item.color }} 
-                    className="text-2xl font-bold w-10 text-center"
+                    className="text-xl font-bold w-8 text-center"
                   >
                     {item.count}
                   </div>
-                  <p className="text-[15px] font-normal text-[#E5E7EB] leading-relaxed">
+                  <p className="text-sm font-normal text-[#E5E7EB] truncate">
                     {item.name}
                   </p>
                 </div>

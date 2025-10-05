@@ -15,6 +15,7 @@ import ErrorState from './components/UI/ErrorState';
 const App: React.FC = () => {
   const { categoryData, filter, setFilter, questionCount, isLoading: loading, error } = useTrivia();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [ignoreHover, setIgnoreHover] = useState(false);
 
   const memoizedData = useMemo(() => {
     return categoryData.map(d => ({
@@ -23,12 +24,22 @@ const App: React.FC = () => {
     }));
   }, [categoryData]);
 
-  const onPieEnter = useCallback((_: any, index: number) => { setActiveIndex(index); }, []);
+  const onPieEnter = useCallback((_: any, index: number) => { 
+    if (!ignoreHover) setActiveIndex(index); 
+  }, [ignoreHover]);
+
   const onMouseLeave = useCallback(() => { setActiveIndex(null); }, []);
-  const handleCategoryClick = useCallback((name: string) => {
-    setFilter(prevFilter => (name === prevFilter ? 'All' : name));
-  }, [setFilter]);
   
+  const handleCategoryClick = useCallback((name: string) => {
+    const wasFiltered = filter === name;
+    setFilter(prevFilter => (name === prevFilter ? 'All' : name));
+    
+    if (wasFiltered) {
+      setIgnoreHover(true);
+      setTimeout(() => setIgnoreHover(false), 300);
+    }
+  }, [filter, setFilter]);
+
   const handleClearFilter = useCallback(() => {
     setFilter('All');
   }, [setFilter]);
@@ -37,8 +48,6 @@ const App: React.FC = () => {
     categoryData.reduce((sum, item) => sum + item.count, 0),
     [categoryData]
   );
-  
-  const isFiltered = filter !== 'All';
 
   if (loading) return <Loading />;
   if (error) return <ErrorState message={error} />;
@@ -49,19 +58,19 @@ const App: React.FC = () => {
       <div className="min-h-screen pb-16">
         <Header />
 
-        <main className="px-8 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 min-h-[600px]">
-            {/* Left Column */}
+        <main className="px-6 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 min-h-[600px]">
+            {/* Left Column - Pie Chart */}
             <div className="lg:col-span-2 fade-in flex flex-col">
               <AnalysisCard title="Category Distribution">
-                <div className="flex-grow flex flex-col items-center justify-center p-12">
-                   {isFiltered && (
+                <div className="flex-grow flex flex-col items-center justify-center p-4">
+                  {filter !== 'All' && (
                     <div className="w-full flex justify-center mb-4">
-                      <div className="bg-[#1F2937] rounded-lg py-3 px-4 flex items-center justify-between max-w-md">
+                      <div className="bg-[#1F2937] rounded-lg py-2 px-3 flex items-center justify-between max-w-md">
                         <span className="text-gray-300">Filtered by: <span className="font-semibold text-white">{filter}</span></span>
                         <button 
                           onClick={handleClearFilter} 
-                          className="ml-4 bg-[#374151] hover:bg-gray-600 text-white font-bold py-1 px-3 rounded-md transition-colors duration-150 focus:outline-none"
+                          className="ml-3 bg-[#374151] hover:bg-gray-600 text-white text-sm py-1 px-2 rounded transition-colors duration-150 focus:outline-none"
                         >
                           Clear
                         </button>
@@ -77,28 +86,29 @@ const App: React.FC = () => {
                     onMouseLeave={onMouseLeave}
                     onCategoryClick={handleCategoryClick}
                   />
-                  <p className="text-gray-400 text-sm mt-4">
-                    Click category to filter
-                  </p>
                 </div>
               </AnalysisCard>
             </div>
 
-            {/* Right Column */}
-            <div className="lg:col-span-1 fade-in flex flex-col gap-y-6" style={{ animationDelay: '0.2s' }}>
-              <div className="flex flex-col flex-grow bg-transparent p-4 rounded-lg min-h-0">
-                <h3 className="text-lg font-semibold text-cyber-primary mb-4 text-glow-subtle">Categories</h3>
-                <div className="overflow-y-auto flex-grow custom-scrollbar" style={{ maxHeight: 'calc(100vh - 500px)' }}>
-                   <CategoryLegend
-                      data={memoizedData}
-                      filter={filter}
-                      onMouseEnter={onPieEnter}
-                      onMouseLeave={onMouseLeave}
-                      onCategoryClick={handleCategoryClick}
+            {/* Right Column - Legend and Difficulty */}
+            <div className="lg:col-span-1 fade-in flex flex-col gap-4" style={{ animationDelay: '0.2s' }}>
+              <div className="flex flex-col flex-grow bg-transparent rounded-lg">
+                <div className="mb-3">
+                  <h3 className="text-lg font-semibold text-cyber-primary text-glow-subtle">Categories</h3>
+                  <p className="text-gray-400 text-sm">Click to select</p>
+                </div>
+                <div className="overflow-y-auto flex-grow custom-scrollbar pr-2">
+                  <CategoryLegend
+                    data={memoizedData}
+                    filter={filter}
+                    onMouseEnter={onPieEnter}
+                    onMouseLeave={onMouseLeave}
+                    onCategoryClick={handleCategoryClick}
                   />
                 </div>
               </div>
-              <div className="h-[280px] flex-shrink-0">
+              
+              <div className="h-[300px]">
                 <DifficultyAnalysis />
               </div>
             </div>

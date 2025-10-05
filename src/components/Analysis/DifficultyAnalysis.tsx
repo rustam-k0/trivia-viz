@@ -10,7 +10,7 @@ const DifficultyAnalysis: React.FC = () => {
 
   return (
     <AnalysisCard title="Difficulty Distribution">
-      <div className="p-2 h-full">
+      <div className="h-full p-2">
         <DifficultyBarChart data={difficultyData} />
       </div>
     </AnalysisCard>

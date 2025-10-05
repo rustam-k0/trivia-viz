@@ -12,7 +12,7 @@ interface DifficultyBarChartProps {
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-background border border-border-primary p-3 rounded-md shadow-lg">
+      <div className="bg-[#1A1A1A] border border-[#2D2D2D] p-2 rounded shadow">
         <p className="font-bold">{label}</p>
         <p className="text-text-secondary">{`Questions: ${payload[0].value}`}</p>
       </div>
@@ -38,7 +38,7 @@ const DifficultyBarChart: React.FC<DifficultyBarChartProps> = ({ data }) => {
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <BarChart data={data} margin={{ top: 20, right: 10, left: -20, bottom: 5 }} barCategoryGap="20%">
+      <BarChart data={data} margin={{ top: 20, right: 10, left: 0, bottom: 5 }} barCategoryGap="25%">
         <defs>
           <linearGradient id="color-easy" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor={difficultyColors.easy} stopOpacity={0.8}/>
@@ -57,8 +57,8 @@ const DifficultyBarChart: React.FC<DifficultyBarChartProps> = ({ data }) => {
         <XAxis dataKey="name" tick={{ fill: '#adb5bd', fontSize: 12 }} stroke="#343a40" />
         <YAxis tick={{ fill: '#adb5bd', fontSize: 12 }} stroke="#343a40" />
         <Tooltip cursor={{ fill: 'rgba(95, 117, 230, 0.1)' }} content={<CustomTooltip />} />
-        <Bar dataKey="count" radius={[6, 6, 0, 0]}>
-          <LabelList dataKey="count" position="top" style={{ fill: '#E5E7EB', fontSize: 14 }} />
+        <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+          <LabelList dataKey="count" position="top" style={{ fill: '#E5E7EB', fontSize: 12 }} />
           {data.map((entry) => (
             <Cell key={`cell-${entry.name}`} fill={`url(#color-${entry.name})`} />
           ))}
