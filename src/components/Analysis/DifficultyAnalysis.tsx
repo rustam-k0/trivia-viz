@@ -9,8 +9,10 @@ const DifficultyAnalysis: React.FC = () => {
   const { difficultyData } = useTrivia();
 
   return (
-    <AnalysisCard title="Difficulty Breakdown">
-      <DifficultyBarChart data={difficultyData} />
+    <AnalysisCard title="Difficulty Distribution">
+      <div className="p-2 h-full">
+        <DifficultyBarChart data={difficultyData} />
+      </div>
     </AnalysisCard>
   );
 };

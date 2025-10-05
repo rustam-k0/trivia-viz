@@ -10,7 +10,7 @@ const renderActiveShape = (props: any) => {
 
   return (
     <g>
-      <text x={cx} y={cy - 20} textAnchor="middle" fill="#FFFFFF" fontSize="3.5rem" fontWeight="bold" className="text-shadow-glow">{value}</text>
+      <text x={cx} y={cy - 20} textAnchor="middle" fill="#FFFFFF" fontSize="4rem" fontWeight="bold" className="text-shadow-glow">{value}</text>
       <text x={cx} y={cy + 40} textAnchor="middle" fill="#AAAAAA" fontSize="1.4rem">Questions</text>
       <text x={cx} y={cy + 75} textAnchor="middle" fill={shapeColor} fontSize="1.3rem" fontWeight="semibold">{payload.name}</text>
       <Sector
@@ -49,7 +49,7 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
 
   if (!data.length) {
     return (
-      <div className="flex items-center justify-center h-full w-full min-h-[500px]">
+      <div className="flex items-center justify-center h-full w-full min-h-[450px]">
         <div className="text-center">
           <p className="text-text-secondary text-lg">No Data Available</p>
         </div>
@@ -57,12 +57,12 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
     );
   }
 
-  const SIZE = 500;
-  const outerRadius = SIZE * 0.4;
-  const innerRadius = outerRadius * 0.75;
+  const SIZE = 550;
+  const outerRadius = 220;
+  const innerRadius = 130;
 
   return (
-    <div className="w-full md:w-2/5 flex-shrink-0 relative" style={{ height: SIZE }}>
+    <div className="w-full h-full relative" style={{ minWidth: SIZE, minHeight: SIZE }}>
       <div className={`absolute inset-0 flex flex-col items-center justify-center pointer-events-none transition-opacity duration-200 ${activeIndex !== null ? 'opacity-0' : 'opacity-100'}`}>
         <div className="text-shadow-glow text-6xl font-bold" style={{ color: centerTextColor }}>{questionCount}</div>
         <div className="text-[#AAAAAA] text-base mt-2">{centerLabel}</div>
@@ -79,16 +79,16 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
             nameKey="name"
             cx="50%" cy="50%"
             outerRadius={outerRadius} innerRadius={innerRadius}
-            paddingAngle={2}
+            paddingAngle={4}
             onMouseEnter={onPieEnter} onMouseLeave={onMouseLeave}
             onClick={(_, index) => onCategoryClick(data[index].name)}
           >
             {data.map(entry => (
               <Cell 
                 key={`cell-${entry.name}`} 
-                fill={entry.color} // <-- Цвет берется напрямую из props
+                fill={entry.color}
                 stroke="#0D0D0D" strokeWidth={3}
-                className="cursor-pointer focus:outline-none"
+                className="cursor-pointer focus:outline-none transition-opacity duration-200 hover:opacity-80"
               />
             ))}
           </Pie>

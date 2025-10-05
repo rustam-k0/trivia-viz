@@ -1,25 +1,35 @@
-Trivia Data Visualizer
 
-Инструмент для визуализации данных из Open Trivia DB API. Показывает навыки работы с React, интеграции внешнего API и построения интерактивных графиков с помощью Recharts. Приложение собрано через Vite и задеплоено на GitHub Pages.
+# Triview data visualizer
 
-## Технологии
-* React
-* Vite
-* Recharts
-* TypeScript
-* Tailwind CSS
-* fetch / axios для работы с API
-* GitHub Pages
+A data visualization tool for the Open Trivia DB API. 
+
+##  Stack
+
+  * TypeScript
+  * React
+  * Tailwind CSS
+  * Vite
+  * Recharts
+
+## Core Logic & Architecture
+
+The application's architecture is designed to be modular, scalable, and maintainable.
+
+  * **Centralized State:** A central `TriviaContext` fetches and manages all trivia data, acting as a single source of truth for the entire application.
+  * **Container/Presentational Pattern:** "Smart" container components (e.g., `CategoryAnalysis.tsx`) handle all logic, state management, and data preparation. They pass prepared data down to "dumb" presentational components (e.g., `CategoryPieChart.tsx`, `CategoryLegend.tsx`) which are only responsible for rendering the UI.
+  * **Color Consistency:** To ensure a consistent user experience, a `colorManager.ts` utility assigns a persistent color to each category for the duration of a session. This guarantees that a category's color remains the same across all components (pie chart, legend) regardless of filtering or re-renders.
+  * **Reusable Components:** The `AnalysisCard.tsx` component serves as a reusable UI wrapper, providing a consistent shell for all data visualization widgets and keeping the codebase DRY (Don't Repeat Yourself).
+
+## Project Structure
+
+The project structure is organized by feature and responsibility, promoting clarity and separation of concerns.
 
 ```
-/src
-├── public/
-│   └── index.html
+/
 ├── src/
 │   ├── api/
 │   │   └── triviaApi.ts
 │   ├── assets/
-│   │   └──
 │   ├── components/
 │   │   ├── Analysis/
 │   │   │   ├── CategoryAnalysis.tsx
@@ -30,21 +40,22 @@ Trivia Data Visualizer
 │   │   ├── Layout/
 │   │   │   └── Header.tsx
 │   │   └── UI/
+│   │       ├── AnalysisCard.tsx
 │   │       ├── CategoryLegend.tsx
 │   │       ├── ErrorState.tsx
 │   │       └── Loading.tsx
-|   |
 │   ├── config/
-│   │   └── analysisConfig.ts
-|   |   └── constants.ts
-|   |
+│   │   ├── analysisConfig.ts
+│   │   └── constants.ts
 │   ├── context/
 │   │   └── TriviaContext.tsx
 │   ├── hooks/
 │   │   └── useTriviaData.ts
-|   |
 │   ├── types/
 │   │   └── index.ts
+│   ├── utils/
+│   │   └── dataAggregator.ts
+|   |   └── colorManager.ts
 │   ├── App.tsx
 │   ├── index.css
 │   └── main.tsx
@@ -54,15 +65,21 @@ Trivia Data Visualizer
 ├── postcss.config.js
 ├── tailwind.config.js
 ├── tsconfig.json
-├── tsconfig.node.json
 └── vite.config.ts
 ```
 
-## Установка и запуск
+## Setup and Running
 
+1.  Install dependencies:
 
-npm install
-npm run dev
+    ```sh
+    npm install
+    ```
 
-Приложение будет доступно по адресу http://localhost:5173/
+2.  Run the development server:
 
+    ```sh
+    npm run dev
+    ```
+
+The application will be available at `http://localhost:5173/`.

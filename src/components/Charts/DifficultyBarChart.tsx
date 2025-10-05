@@ -1,7 +1,9 @@
+// src/components/Charts/DifficultyBarChart.tsx
+
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell, LabelList } from 'recharts';
 import type { DifficultyData } from '../../types';
-import { COLORS } from '../../config/constants'; // ИМПОРТ для консистентности
+import { COLORS } from '../../config/constants';
 
 interface DifficultyBarChartProps {
   data: DifficultyData[];
@@ -29,14 +31,14 @@ const DifficultyBarChart: React.FC<DifficultyBarChartProps> = ({ data }) => {
   }
 
   const difficultyColors = {
-    easy: COLORS[0],      // Техно-зеленый
-    medium: COLORS[5],    // Янтарный
-    hard: COLORS[3],      // Малиновый
+    easy: COLORS[0],
+    medium: COLORS[5],
+    hard: COLORS[3],
   };
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={data} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart data={data} margin={{ top: 20, right: 10, left: -20, bottom: 5 }} barCategoryGap="20%">
         <defs>
           <linearGradient id="color-easy" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor={difficultyColors.easy} stopOpacity={0.8}/>
@@ -52,10 +54,11 @@ const DifficultyBarChart: React.FC<DifficultyBarChartProps> = ({ data }) => {
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="#343a40" />
-        <XAxis dataKey="name" tick={{ fill: '#adb5bd' }} stroke="#343a40" />
-        <YAxis tick={{ fill: '#adb5bd' }} stroke="#343a40" />
+        <XAxis dataKey="name" tick={{ fill: '#adb5bd', fontSize: 12 }} stroke="#343a40" />
+        <YAxis tick={{ fill: '#adb5bd', fontSize: 12 }} stroke="#343a40" />
         <Tooltip cursor={{ fill: 'rgba(95, 117, 230, 0.1)' }} content={<CustomTooltip />} />
-        <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+        <Bar dataKey="count" radius={[6, 6, 0, 0]}>
+          <LabelList dataKey="count" position="top" style={{ fill: '#E5E7EB', fontSize: 14 }} />
           {data.map((entry) => (
             <Cell key={`cell-${entry.name}`} fill={`url(#color-${entry.name})`} />
           ))}
