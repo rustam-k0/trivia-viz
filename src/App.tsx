@@ -12,7 +12,6 @@ import ErrorState from './components/UI/ErrorState';
 const App: React.FC = () => {
   const { categoryData, filter, setFilter, questionCount, isLoading: loading, error } = useTrivia();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [ignoreHover, setIgnoreHover] = useState(false);
 
   const memoizedData = useMemo(() => {
     return categoryData.map(d => ({
@@ -22,20 +21,14 @@ const App: React.FC = () => {
   }, [categoryData]);
 
   const onPieEnter = useCallback((_: any, index: number) => { 
-    if (!ignoreHover) setActiveIndex(index); 
-  }, [ignoreHover]);
+    setActiveIndex(index); 
+  }, []);
 
   const onMouseLeave = useCallback(() => { setActiveIndex(null); }, []);
   
   const handleCategoryClick = useCallback((name: string) => {
-    const wasFiltered = filter === name;
     setFilter(prevFilter => (name === prevFilter ? 'All' : name));
-    
-    if (wasFiltered) {
-      setIgnoreHover(true);
-      setTimeout(() => setIgnoreHover(false), 150);
-    }
-  }, [filter, setFilter]);
+  }, [setFilter]);
 
   const totalQuestions = useMemo(() =>
     categoryData.reduce((sum, item) => sum + item.count, 0),
