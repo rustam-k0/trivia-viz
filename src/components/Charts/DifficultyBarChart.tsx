@@ -1,5 +1,3 @@
-// src/components/Charts/DifficultyBarChart.tsx
-
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell, LabelList } from 'recharts';
 import type { DifficultyData } from '../../types';

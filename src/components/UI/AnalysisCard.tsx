@@ -1,5 +1,3 @@
-// src/components/UI/AnalysisCard.tsx
-
 import React from 'react';
 
 interface AnalysisCardProps {

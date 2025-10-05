@@ -1,5 +1,3 @@
-// src/App.tsx
-
 import React, { useState, useCallback, useMemo } from 'react';
 import Header from './components/Layout/Header';
 import { useTrivia } from './context/TriviaContext';
@@ -60,7 +58,6 @@ const App: React.FC = () => {
 
         <main className="px-6 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 min-h-[600px]">
-            {/* Left Column - Pie Chart */}
             <div className="lg:col-span-2 fade-in flex flex-col">
               <AnalysisCard title="Category Distribution">
                 <div className="flex-grow flex flex-col items-center justify-center p-4">
@@ -90,7 +87,6 @@ const App: React.FC = () => {
               </AnalysisCard>
             </div>
 
-            {/* Right Column - Legend and Difficulty */}
             <div className="lg:col-span-1 fade-in flex flex-col gap-4" style={{ animationDelay: '0.2s' }}>
               <div className="flex flex-col flex-grow bg-transparent rounded-lg">
                 <div className="mb-3">

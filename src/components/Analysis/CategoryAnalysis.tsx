@@ -1,8 +1,6 @@
-// src/components/Analysis/CategoryAnalysis.tsx
-
 import React, { useState, useCallback, useMemo } from 'react';
 import { useTrivia } from '../../context/TriviaContext';
-import { getColorForCategory } from '../../utils/colorManager'; // <-- Исправленный путь
+import { getColorForCategory } from '../../utils/colorManager';
 
 import AnalysisCard from '../UI/AnalysisCard';
 import CategoryPieChart from '../Charts/CategoryPieChart';
@@ -25,7 +23,7 @@ const CategoryAnalysis: React.FC = () => {
     setFilter(prevFilter => (name === prevFilter ? 'All' : name));
   }, [setFilter]);
 
-  const totalQuestions = useMemo(() => 
+  const totalQuestions = useMemo(() =>
     categoryData.reduce((sum, item) => sum + item.count, 0),
     [categoryData]
   );

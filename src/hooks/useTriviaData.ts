@@ -37,7 +37,6 @@ export const useTriviaData = () => {
     [questions, filter]
   );
   
-  // Добавлена сортировка категорий
   const categoryData = useMemo(() => {
     const aggregated = aggregateByCategory(filteredQuestions);
     return aggregated.sort((a, b) => b.count - a.count);

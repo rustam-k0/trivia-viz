@@ -1,12 +1,10 @@
-// src/components/Charts/CategoryPieChart.tsx
-
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Sector } from 'recharts';
 import type { CategoryData } from '../../types';
 
 const renderActiveShape = (props: any) => {
   const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, payload, value } = props;
-  const shapeColor = payload.color; 
+  const shapeColor = payload.color;
 
   return (
     <g>
@@ -41,10 +39,10 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
   const isFiltered = filter !== 'All';
   const NEUTRAL_COLOR = '#FFFFFF';
 
-  const centerTextColor = isFiltered 
-    ? data.find(d => d.name === filter)?.color ?? NEUTRAL_COLOR 
+  const centerTextColor = isFiltered
+    ? data.find(d => d.name === filter)?.color ?? NEUTRAL_COLOR
     : NEUTRAL_COLOR;
-  
+
   const centerLabel = isFiltered ? 'QUESTIONS IN FILTER' : 'TOTAL QUESTIONS';
 
   if (!data.length) {
@@ -80,8 +78,8 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
             onClick={(_, index) => onCategoryClick(data[index].name)}
           >
             {data.map(entry => (
-              <Cell 
-                key={`cell-${entry.name}`} 
+              <Cell
+                key={`cell-${entry.name}`}
                 fill={entry.color}
                 stroke="#0D0D0D" strokeWidth={2}
                 className="cursor-pointer transition-opacity duration-200 hover:opacity-80"

@@ -1,5 +1,3 @@
-// src/components/UI/CategoryLegend.tsx
-
 import React from 'react';
 
 interface EnrichedCategoryData {
@@ -37,8 +35,8 @@ const CategoryLegend: React.FC<CategoryLegendProps> = ({ data, filter, onMouseEn
             >
               <div className="flex justify-between items-center w-full py-1.5 px-2">
                 <div className="flex items-center gap-x-3 flex-grow min-w-0">
-                  <div 
-                    style={{ color: item.color }} 
+                  <div
+                    style={{ color: item.color }}
                     className="text-xl font-bold w-8 text-center"
                   >
                     {item.count}

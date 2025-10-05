@@ -5,18 +5,15 @@ const MAX_QUESTIONS = 50;
 
 let sessionToken: string | null = null;
 
-// Улучшенная функция декодирования
 const decodeText = (str: string): string => {
   try {
-    // Сначала декодируем URL-сущности (например, %20, %26)
     const decodedUrl = decodeURIComponent(str);
-    // Затем обрабатываем HTML-сущности (например, &quot;)
     const textarea = document.createElement('textarea');
     textarea.innerHTML = decodedUrl;
     return textarea.value;
   } catch (e) {
     console.error("Failed to decode text:", str, e);
-    return str; // Возвращаем исходную строку в случае ошибки
+    return str;
   }
 };
 
@@ -55,7 +52,6 @@ export const fetchQuestions = async (signal: AbortSignal): Promise<TriviaQuestio
 
   if (data.response_code === 3 || data.response_code === 4) {
     token = await getNewToken();
-    // Делаем повторный вызов с новым токеном
     const retryResponse = await fetch(`${BASE_URL}api.php?amount=${MAX_QUESTIONS}&token=${token}&encode=url3986`, { signal });
     const retryData = await retryResponse.json();
     if (retryData.response_code !== 0) {

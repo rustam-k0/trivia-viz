@@ -1,5 +1,3 @@
-// src/components/Analysis/DifficultyAnalysis.tsx
-
 import React from 'react';
 import { useTrivia } from '../../context/TriviaContext';
 import DifficultyBarChart from '../Charts/DifficultyBarChart';
