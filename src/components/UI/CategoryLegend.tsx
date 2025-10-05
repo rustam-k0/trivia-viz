@@ -19,7 +19,7 @@ const CategoryLegend: React.FC<CategoryLegendProps> = ({ data, filter, onMouseEn
 
   return (
     <div className="w-full flex-grow">
-      <div className="flex flex-col gap-y-2">
+      <div className="flex flex-col gap-y-1 sm:gap-y-2">
         {sortedData.map((item, i) => {
           const isActive = filter === item.name;
 
@@ -37,11 +37,11 @@ const CategoryLegend: React.FC<CategoryLegendProps> = ({ data, filter, onMouseEn
                 <div className="flex items-center gap-x-3 flex-grow min-w-0">
                   <div
                     style={{ color: item.color }}
-                    className="text-xl font-bold w-8 text-center"
+                    className="text-lg font-bold w-7 text-center"
                   >
                     {item.count}
                   </div>
-                  <p className="text-xl font-normal text-[#E5E7EB] truncate">
+                  <p className="text-lg font-normal text-[#E5E7EB] truncate">
                     {item.name}
                   </p>
                 </div>

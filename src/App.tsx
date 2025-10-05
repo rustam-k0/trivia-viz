@@ -3,7 +3,6 @@ import Header from './components/Layout/Header';
 import { useTrivia } from './context/TriviaContext';
 import { getColorForCategory } from './utils/colorManager';
 
-import AnalysisCard from './components/UI/AnalysisCard';
 import CategoryPieChart from './components/Charts/CategoryPieChart';
 import CategoryLegend from './components/UI/CategoryLegend';
 import DifficultyAnalysis from './components/Analysis/DifficultyAnalysis';
@@ -53,47 +52,58 @@ const App: React.FC = () => {
   return (
     <>
       <div className="cyber-bg" />
-      <div className="min-h-screen pb-16">
+      <div className="min-h-screen pb-8">
         <Header />
 
-        <main className="px-6 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 min-h-[600px]">
+        <main className="px-4 sm:px-6 py-4 sm:py-8">
+          <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 min-h-[500px]">
             <div className="lg:col-span-2 fade-in flex flex-col">
-              <AnalysisCard title="Category Distribution">
-                <div className="flex-grow flex flex-col items-center justify-center p-4">
+              <div className="flex flex-col flex-grow bg-transparent rounded-lg">
+                <div className="mb-4 sm:mb-6 text-center">
+                  <h3 className="text-xl sm:text-2xl font-semibold text-cyber-primary text-glow-subtle">Category Distribution</h3>
+                </div>
+                <div className="flex-grow flex flex-col items-center justify-start">
                   {filter !== 'All' && (
-                    <div className="w-full flex justify-center mb-4">
-                      <div className="bg-[#1F2937] rounded-lg py-2 px-3 flex items-center justify-between">
-                        <span className="text-gray-300 text-xl">Filtered by: <span className="font-semibold text-white ml-3">{filter}</span></span>
+                    <div className="w-full flex justify-center mb-3 sm:mb-4 px-2">
+                      <div className="bg-[#1F2937] rounded-lg py-2 px-3 flex items-center justify-between w-full max-w-md gap-2">
+                        <div className="flex items-center gap-2 flex-1 min-w-0">
+                          <span className="text-gray-300 text-sm sm:text-base whitespace-nowrap flex-shrink-0">Filtered by:</span>
+                          <span className="font-semibold text-white truncate flex-1">{filter}</span>
+                        </div>
                         <button 
                           onClick={handleClearFilter} 
-                          className="ml-3 bg-[#374151] hover:bg-gray-600 text-gray-300 text-xl py-1 px-2 rounded transition-colors duration-150 focus:outline-none border"
+                          className="bg-[#374151] hover:bg-gray-600 text-gray-300 text-sm sm:text-base py-1 px-2 sm:px-3 rounded transition-colors duration-150 focus:outline-none border whitespace-nowrap flex-shrink-0"
                         >
                           Clear
                         </button>
                       </div>
                     </div>
                   )}
-                  <CategoryPieChart
-                    data={memoizedData}
-                    questionCount={filter === 'All' ? totalQuestions : questionCount}
-                    filter={filter}
-                    activeIndex={activeIndex}
-                    onPieEnter={onPieEnter}
-                    onMouseLeave={onMouseLeave}
-                    onCategoryClick={handleCategoryClick}
-                  />
+                  <div className="w-full h-[300px] sm:h-[350px] md:h-[400px] -mt-4 sm:-mt-6">
+                    <CategoryPieChart
+                      data={memoizedData}
+                      questionCount={filter === 'All' ? totalQuestions : questionCount}
+                      filter={filter}
+                      activeIndex={activeIndex}
+                      onPieEnter={onPieEnter}
+                      onMouseLeave={onMouseLeave}
+                      onCategoryClick={handleCategoryClick}
+                    />
+                  </div>
+                  <div className="w-full max-w-[600px] mt-4 sm:mt-6 md:mt-8 h-[200px] sm:h-[250px]">
+                    <DifficultyAnalysis />
+                  </div>
                 </div>
-              </AnalysisCard>
+              </div>
             </div>
 
-            <div className="lg:col-span-1 fade-in flex flex-col gap-4" style={{ animationDelay: '0.2s' }}>
+            <div className="lg:col-span-1 fade-in flex flex-col" style={{ animationDelay: '0.2s' }}>
               <div className="flex flex-col flex-grow bg-transparent rounded-lg">
-                <div className="mb-3">
-                  <h3 className="text-2xl font-semibold text-cyber-primary text-glow-subtle">Categories</h3>
-                  <p className="text-gray-400 text-xl">Click to filter</p>
+                <div className="mb-4 sm:mb-6 text-center">
+                  <h3 className="text-xl sm:text-2xl font-semibold text-cyber-primary text-glow-subtle">Categories</h3>
+                  <p className="text-gray-400 text-sm sm:text-xl">Click to filter</p>
                 </div>
-                <div className="overflow-y-auto flex-grow custom-scrollbar pr-2">
+                <div className="overflow-y-auto flex-grow custom-scrollbar pr-2 max-h-[400px] sm:max-h-none">
                   <CategoryLegend
                     data={memoizedData}
                     filter={filter}
@@ -102,10 +112,6 @@ const App: React.FC = () => {
                     onCategoryClick={handleCategoryClick}
                   />
                 </div>
-              </div>
-              
-              <div className="h-[300px]">
-                <DifficultyAnalysis />
               </div>
             </div>
           </div>
