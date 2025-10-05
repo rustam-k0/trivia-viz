@@ -74,7 +74,7 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
             dataKey="count"
             nameKey="name"
             cx="50%" cy="50%"
-            outerRadius={200} innerRadius={120}
+            outerRadius={300} innerRadius={180}
             paddingAngle={2}
             onMouseEnter={onPieEnter} onMouseLeave={onMouseLeave}
             onClick={(_, index) => onCategoryClick(data[index].name)}

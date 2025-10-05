@@ -16,9 +16,7 @@ interface CategoryLegendProps {
   onCategoryClick: (name: string) => void;
 }
 
-const CategoryLegend: React.FC<CategoryLegendProps> = (props) => {
-  const { data, filter, onMouseEnter, onMouseLeave, onCategoryClick } = props;
-  
+const CategoryLegend: React.FC<CategoryLegendProps> = ({ data, filter, onMouseEnter, onMouseLeave, onCategoryClick }) => {
   const sortedData = [...data].sort((a, b) => b.count - a.count);
 
   return (
@@ -31,10 +29,7 @@ const CategoryLegend: React.FC<CategoryLegendProps> = (props) => {
             <div
               key={item.name}
               className={`flex items-center w-full rounded transition-all duration-150 cursor-pointer
-                ${isActive 
-                  ? 'bg-[#374151] ring-1 ring-[#14B8A6]' 
-                  : 'hover:bg-[#374151]'
-                }`
+                ${isActive ? '' : 'hover:bg-[#374151]'}`
               }
               onMouseEnter={() => onMouseEnter(null, i)}
               onMouseLeave={onMouseLeave}
@@ -48,7 +43,7 @@ const CategoryLegend: React.FC<CategoryLegendProps> = (props) => {
                   >
                     {item.count}
                   </div>
-                  <p className="text-sm font-normal text-[#E5E7EB] truncate">
+                  <p className="text-xl font-normal text-[#E5E7EB] truncate">
                     {item.name}
                   </p>
                 </div>

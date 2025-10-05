@@ -66,11 +66,11 @@ const App: React.FC = () => {
                 <div className="flex-grow flex flex-col items-center justify-center p-4">
                   {filter !== 'All' && (
                     <div className="w-full flex justify-center mb-4">
-                      <div className="bg-[#1F2937] rounded-lg py-2 px-3 flex items-center justify-between max-w-md">
-                        <span className="text-gray-300">Filtered by: <span className="font-semibold text-white">{filter}</span></span>
+                      <div className="bg-[#1F2937] rounded-lg py-2 px-3 flex items-center justify-between">
+                        <span className="text-gray-300 text-xl">Filtered by: <span className="font-semibold text-white ml-3">{filter}</span></span>
                         <button 
                           onClick={handleClearFilter} 
-                          className="ml-3 bg-[#374151] hover:bg-gray-600 text-white text-sm py-1 px-2 rounded transition-colors duration-150 focus:outline-none"
+                          className="ml-3 bg-[#374151] hover:bg-gray-600 text-gray-300 text-xl py-1 px-2 rounded transition-colors duration-150 focus:outline-none border"
                         >
                           Clear
                         </button>
@@ -94,8 +94,8 @@ const App: React.FC = () => {
             <div className="lg:col-span-1 fade-in flex flex-col gap-4" style={{ animationDelay: '0.2s' }}>
               <div className="flex flex-col flex-grow bg-transparent rounded-lg">
                 <div className="mb-3">
-                  <h3 className="text-lg font-semibold text-cyber-primary text-glow-subtle">Categories</h3>
-                  <p className="text-gray-400 text-sm">Click to select</p>
+                  <h3 className="text-2xl font-semibold text-cyber-primary text-glow-subtle">Categories</h3>
+                  <p className="text-gray-400 text-xl">Click to filter</p>
                 </div>
                 <div className="overflow-y-auto flex-grow custom-scrollbar pr-2">
                   <CategoryLegend
