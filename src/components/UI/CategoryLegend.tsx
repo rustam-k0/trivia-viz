@@ -37,11 +37,11 @@ const CategoryLegend: React.FC<CategoryLegendProps> = ({ data, filter, onMouseEn
                 <div className="flex items-center gap-x-3 flex-grow min-w-0">
                   <div
                     style={{ color: item.color }}
-                    className="text-lg font-bold w-7 text-center"
+                    className="text-base sm:text-lg font-bold w-6 sm:w-7 text-center"
                   >
                     {item.count}
                   </div>
-                  <p className="text-lg font-normal text-[#E5E7EB] truncate">
+                  <p className="text-base sm:text-lg font-normal text-[#E5E7EB] truncate">
                     {item.name}
                   </p>
                 </div>

@@ -10,7 +10,7 @@ const renderActiveShape = (props: any) => {
 
   return (
     <g>
-      <text x={cx} y={cy - 15} textAnchor="middle" fill="#FFFFFF" fontSize="3.5rem" fontWeight="bold" className="text-shadow-glow">{value}</text>
+      <text x={cx} y={cy - 15} textAnchor="middle" fill={shapeColor} fontSize="3.5rem" fontWeight="bold" className="text-shadow-glow">{value}</text>
       <text x={cx} y={cy + 30} textAnchor="middle" fill="#AAAAAA" fontSize="1.2rem">Questions</text>
       <text x={cx} y={cy + 60} textAnchor="middle" fill={shapeColor} fontSize="1.1rem" fontWeight="semibold">{displayName}</text>
       <Sector
@@ -39,11 +39,9 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
   const { data, questionCount, filter, activeIndex, onPieEnter, onMouseLeave, onCategoryClick } = props;
 
   const isFiltered = filter !== 'All';
-  const NEUTRAL_COLOR = '#FFFFFF';
-
-  const centerTextColor = isFiltered
-    ? data.find(d => d.name === filter)?.color ?? NEUTRAL_COLOR
-    : NEUTRAL_COLOR;
+  const centerColor = isFiltered
+    ? data.find(d => d.name === filter)?.color ?? '#FFFFFF'
+    : '#FFFFFF';
 
   const centerLabel = isFiltered ? 'QUESTIONS IN FILTER' : 'TOTAL QUESTIONS';
 
@@ -63,11 +61,11 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
 
   return (
     <div className="w-full h-full min-h-[300px] sm:min-h-[400px] relative">
-      <div className={`absolute inset-0 flex flex-col items-center justify-center pointer-events-none transition-opacity duration-200 ${activeIndex !== null ? 'opacity-0' : 'opacity-100'}`}>
-        <div className="text-shadow-glow text-5xl font-bold" style={{ color: centerTextColor }}>{questionCount}</div>
-        <div className="text-[#AAAAAA] text-sm mt-1">{centerLabel}</div>
+      <div className={`absolute inset-0 flex flex-col items-center justify-center pointer-events-none transition-opacity duration-100 ${activeIndex !== null ? 'opacity-0' : 'opacity-100'}`}>
+        <div className="text-shadow-glow text-3xl sm:text-5xl font-bold" style={{ color: centerColor }}>{questionCount}</div>
+        <div className="text-[#AAAAAA] text-xs sm:text-sm mt-1">{centerLabel}</div>
         {isFiltered && (
-          <div className="font-semibold text-base mt-2 text-center px-2" style={{ color: centerTextColor }}>
+          <div className="font-semibold text-sm sm:text-base mt-2 text-center px-2" style={{ color: centerColor }}>
             {getDisplayName(filter)}
           </div>
         )}
@@ -82,7 +80,7 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
             dataKey="count"
             nameKey="name"
             cx="50%" cy="50%"
-            outerRadius={182} innerRadius={117}
+            outerRadius="80%" innerRadius="60%"
             paddingAngle={2}
             onMouseEnter={onPieEnter} onMouseLeave={onMouseLeave}
             onClick={(_, index) => onCategoryClick(data[index].name)}
@@ -92,7 +90,7 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = (props) => {
                 key={`cell-${entry.name}`}
                 fill={entry.color}
                 stroke="#0D0D0D" strokeWidth={1.5}
-                className="cursor-pointer transition-opacity duration-200 hover:opacity-80"
+                className="cursor-pointer transition-opacity duration-100 hover:opacity-80"
               />
             ))}
           </Pie>
